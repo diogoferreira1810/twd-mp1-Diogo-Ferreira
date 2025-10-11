@@ -3,4 +3,4 @@ commands:
   check-code:
     run: npm run check-code
   update-index:
-    run: git upda-te-index --again #ensure all changes are added to commit
+    run: git update-index --again #ensure all changes are added to commit
