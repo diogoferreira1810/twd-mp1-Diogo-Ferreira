@@ -7,3 +7,4 @@ gonna start on using lefthook, its not using the commands i think
 
 
 npm check-code - executes both lint and prettier 
+git add .;npx lefthook run pre-commit (simulate commit to see lefthook working)
