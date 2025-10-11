@@ -1,2 +1,9 @@
 added lint, npm run eslint to execute, lint-test.js to check rules
-added prettier, npm run clean to execute, missing page to test and see stuff changing
+added prettier, npm run prettier to execute, missing page to test and see stuff changing
+just added jest, need to make the script, do a test files with several tests inside and then work on code coverage
+gonna start on using lefthoow
+
+
+
+
+npm check-code - executes both lint and prettier 
