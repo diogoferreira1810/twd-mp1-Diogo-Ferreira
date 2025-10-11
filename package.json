@@ -19,6 +19,7 @@
     "autoprefixer": "10.4.15",
     "contentful-import": "^9.0.4",
     "date-fns": "2.30.0",
+    "jest": "^30.2.0",
     "lint": "^0.8.19",
     "next": "latest",
     "postcss": "8.4.31",
