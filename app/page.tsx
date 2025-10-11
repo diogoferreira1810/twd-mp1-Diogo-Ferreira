@@ -16,7 +16,7 @@ function Intro() {
         Blog de TDW.
       </h1>
       <h2 className="text-center md:text-left text-lg mt-5 md:pl-8">
-        Aplicação de exemplo para o MP1 com:{" "}
+        Teste{" "}
         <a
           href="https://nextjs.org/"
           className="underline hover:text-success duration-200 transition-colors"
@@ -84,7 +84,6 @@ export default async function Page() {
     return (
       <div className="container mx-auto px-5">
         <Intro />
-        <p>No posts found. Please check your Contentful configuration.</p>
       </div>
     );
   }
