@@ -16,5 +16,8 @@ function badlyFormattedFunction(param1, param2) {
 
 const str = 'This is a poorly formatted string';
 const result = badlyFormattedFunction(true, false);
+const result2 = badlyFormattedFunction(true, false);
+const result3 = badlyFormattedFunction(true, false);
+
 
 export default badlyFormattedFunction;
