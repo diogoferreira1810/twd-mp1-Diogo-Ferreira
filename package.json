@@ -5,7 +5,8 @@
     "build": "next build",
     "start": "next start",
     "setup": "node ./lib/setup.js",
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "clean": "prettier --write ."
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.17.1",
