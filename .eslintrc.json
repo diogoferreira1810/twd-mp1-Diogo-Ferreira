@@ -1,0 +1,16 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "no-unused-vars": "warn", // Warn on unused variables
+    "no-console": "warn" // Warn on console statements
+  },//ignore built files and dependencies
+  "ignorePatterns": [
+    "node_modules/",
+    ".next/",
+    "out/",
+    "build/",
+    "dist/",
+    "coverage/",
+    "lib"
+  ]
+}
