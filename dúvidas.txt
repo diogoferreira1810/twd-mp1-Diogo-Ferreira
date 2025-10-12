@@ -8,3 +8,5 @@ Este erro é derivado do lint, no eslint não aparece
 lint ou eslint?
 
 confirmar o lefthook
+
+regras do lefthook nao estão a assumir quando faço um actual commit
