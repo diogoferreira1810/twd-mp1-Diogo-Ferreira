@@ -10,3 +10,5 @@ lint ou eslint?
 confirmar o lefthook
 
 regras do lefthook nao estão a assumir quando faço um actual commit
+
+porque é que as vezes posso fazer, por exemplo, npm jest e outras npm run jest

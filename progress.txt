@@ -1,10 +1,10 @@
 added lint, npm run eslint to execute, lint-test.js to check rules
 added prettier, npm run prettier to execute, missing page to test and see stuff changing
-just added jest, need to make the script, do a test files with several tests inside and then work on code coverage
+added jest, npm run jest to execute,  script for running the tests is up, need to do code coverage
 gonna start on using lefthook, its not using the commands i think
 
 
 
 
-npm check-code - executes both lint and prettier 
+npm check-code - executes both lint, prettier and jest 
 git add .;npx lefthook run pre-commit (simulate commit to see lefthook working)

@@ -7,7 +7,8 @@
     "setup": "node ./lib/setup.js",
     "eslint": "eslint .",
     "prettier": "prettier --write .",
-    "check-code": "npm run eslint && npm run prettier"
+    "jest": "jest",
+    "check-code": "npm run eslint && npm run prettier && npm run jest"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.17.1",

@@ -19,5 +19,4 @@ const result = badlyFormattedFunction(true, false);
 const result2 = badlyFormattedFunction(true, false);
 const result3 = badlyFormattedFunction(true, false);
 
-
 export default badlyFormattedFunction;
