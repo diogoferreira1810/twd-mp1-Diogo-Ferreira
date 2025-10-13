@@ -18,5 +18,5 @@ pre-commit:
       run: npm run eslint {staged_files}
 
     jest:
-      # Run jest only on files that are staged for commit
-      run: npm run jest
+      # Run jest only
+      run: npm run jest && npm run jest-coverage
