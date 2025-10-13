@@ -8,7 +8,7 @@
     "eslint": "eslint .",
     "prettier": "prettier --write .",
     "jest": "jest",
-    "jest-covrage": "jest --coverage",
+    "jest-coverage": "jest --coverage",
     "check-code": "npm run eslint && npm run prettier && npm run jest"
   },
   "dependencies": {

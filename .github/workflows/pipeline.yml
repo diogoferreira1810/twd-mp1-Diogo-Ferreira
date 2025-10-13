@@ -58,6 +58,8 @@ jobs:
   jest-coverage:
     runs-on: ubuntu-latest
     needs: [eslint, prettier, jest] # This job runs only after all other jobs pass
+    strategy:
+      fail-fast: true
     steps:
       - uses: actions/checkout@v4
 
@@ -75,6 +77,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: [eslint, prettier, jest] # This job runs only after all other jobs pass
+    strategy:
+      fail-fast: true
     if: github.ref == 'refs/heads/main' # This job runs only on main branch
     steps:
       - uses: actions/checkout@v4
