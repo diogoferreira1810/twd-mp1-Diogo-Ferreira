@@ -1,0 +1,18 @@
+# This hook runs before each commit is created
+pre-commit:
+  # Run tasks in parallel for better performance
+  parallel: true
+  commands:
+    # Format code with Prettier
+    prettier:
+      # Match any JS, TS, JSX, TSX, CSS, MD, or YML files, run this only on these file types, avoiding binary files like images
+      glob: '*.{js,ts,jsx,tsx,css,md,yml}'
+      # Run prettier only on files that are staged for commit, only files that were changed
+      run: npm run prettier {staged_files}
+
+    # Lint code with ESLint
+    eslint:
+      # Match any JS, TS, JSX, or TSX files
+      glob: '*.{js,ts,jsx,tsx}'
+      # Run eslint only on files that are staged for commit
+      run: npm run eslint {staged_files}

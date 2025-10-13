@@ -1,1 +1,1 @@
-const test = console.log("oi bro");
+const test = console.log('oi bro');
