@@ -7,7 +7,7 @@
     "setup": "node ./lib/setup.js",
     "eslint": "eslint .",
     "prettier": "prettier --write .",
-    "jest": "jest",
+    "jest": "jest && jest --coverage",
     "check-code": "npm run eslint && npm run prettier && npm run jest"
   },
   "dependencies": {
