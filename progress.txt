@@ -2,6 +2,7 @@ added lint, npm run eslint to execute, lint-test.js to check rules
 added prettier, npm run prettier to execute, missing page to test and see stuff changing
 added jest, npm run jest to execute,  script for running the tests is up, need to do code coverage
 gonna start on using lefthook, its not using the commands i think
+need to create a readme file, to store commands and stuff like that
 
 
 
