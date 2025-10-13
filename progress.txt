@@ -3,7 +3,7 @@ added prettier, npm run prettier to execute, missing page to test and see stuff 
 added jest, npm run jest to execute,  script for running the tests is up, need to do code coverage
 added lefthook, commands are all working
 pipeline tests are working, anti main commit working aswell
-gonna start on building in netlify
+gonna start on building in netlify, a lot of errors 
 need to create a readme file, to store commands and stuff like that
 
 
