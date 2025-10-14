@@ -1,7 +1,9 @@
 added lint, npm run eslint to execute, lint-test.js to check rules
 added prettier, npm run prettier to execute, missing page to test and see stuff changing
 added jest, npm run jest to execute,  script for running the tests is up, need to do code coverage
-gonna start on using lefthook, its not using the commands i think
+added lefthook, commands are all working
+pipeline tests are working, anti main commit working aswell
+gonna start on building in netlify, a lot of errors, gonna try to add deploy step
 need to create a readme file, to store commands and stuff like that
 
 
@@ -9,3 +11,8 @@ need to create a readme file, to store commands and stuff like that
 
 npm check-code - executes both lint, prettier and jest 
 git add .;npx lefthook run pre-commit (simulate commit to see lefthook working)
+
+NETLIFY stuff
+CNAME - tdw-mp1-diogo-ferreira.netlify.app
+Site ID - 52c34ab6-2f3f-4a41-8004-1f5d380141c0
+Token - nfp_dxaHWCku7wKNjTdsPTcwFXFvzPsEFqDv2bcf

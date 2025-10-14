@@ -20,7 +20,14 @@ const POST_GRAPHQL_FIELDS = `
 `;
 
 async function fetchGraphQL(query: string, preview = false): Promise<any> {
-  return fetch(
+  // Debug environment variables
+  console.log('Debug - Environment Variables:');
+  console.log('CONTENTFUL_SPACE_ID:', process.env.CONTENTFUL_SPACE_ID);
+  console.log('CONTENTFUL_ACCESS_TOKEN:', process.env.CONTENTFUL_ACCESS_TOKEN ? '**exists**' : '**missing**');
+  console.log('CONTENTFUL_PREVIEW_ACCESS_TOKEN:', process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN ? '**exists**' : '**missing**');
+  console.log('Preview mode:', preview);
+
+  const response = await fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
     {
       method: 'POST',
@@ -35,7 +42,23 @@ async function fetchGraphQL(query: string, preview = false): Promise<any> {
       body: JSON.stringify({ query }),
       next: { tags: ['posts'] },
     }
-  ).then((response) => response.json());
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch data: ${response.statusText}`);
+  }
+
+  const json = await response.json();
+
+  if (json.errors) {
+    console.error(
+      'Contentful GraphQL Errors:',
+      JSON.stringify(json.errors, null, 2)
+    );
+    throw new Error('Failed to fetch data from Contentful');
+  }
+
+  return json;
 }
 
 function extractPost(fetchResponse: any): any {

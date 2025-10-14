@@ -16,3 +16,7 @@ pre-commit:
       glob: '*.{js,ts,jsx,tsx}'
       # Run eslint only on files that are staged for commit
       run: npm run eslint {staged_files}
+
+    jest:
+      # Run jest only
+      run: npm run jest && npm run jest-coverage

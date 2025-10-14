@@ -1,16 +1,1 @@
- Warning: Next.js inferred your workspace root, but it may not be correct.
- We detected multiple lockfiles and selected the directory of C:\Users\dorit\Documents\Mestrado\TDW\package-lock.json as the root directory.
- To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
-   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
- Detected additional lockfiles:
-   * C:\Users\dorit\Documents\Mestrado\TDW\twd-mp1-Diogo-Ferreira\package-lock.json
-Este erro é derivado do lint, no eslint não aparece
-lint ou eslint?
-
-confirmar o lefthook
-
-regras do lefthook nao estão a assumir quando faço um actual commit
-
-porque é que as vezes posso fazer, por exemplo, npm jest e outras npm run jest
-
-confirmar como fazer merge de tudo
+stuck on deploying to netlify, possibly fixed? must add variablels of netlify
