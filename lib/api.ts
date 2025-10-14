@@ -35,7 +35,20 @@ async function fetchGraphQL(query: string, preview = false): Promise<any> {
       body: JSON.stringify({ query }),
       next: { tags: ['posts'] },
     }
-  ).then((response) => response.json());
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch data: ${response.statusText}`);
+  }
+
+  const json = await response.json();
+  
+  if (json.errors) {
+    console.error('Contentful GraphQL Errors:', JSON.stringify(json.errors, null, 2));
+    throw new Error('Failed to fetch data from Contentful');
+  }
+
+  return json;
 }
 
 function extractPost(fetchResponse: any): any {

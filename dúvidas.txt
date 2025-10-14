@@ -1,1 +1,1 @@
-confirmar como fazer merge de tudo, faço merge de qual primeiro?
+stuck on deploying to netlify
