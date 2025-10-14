@@ -20,7 +20,7 @@ const POST_GRAPHQL_FIELDS = `
 `;
 
 async function fetchGraphQL(query: string, preview = false): Promise<any> {
-  return fetch(
+  const response = await fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
     {
       method: 'POST',
@@ -42,9 +42,12 @@ async function fetchGraphQL(query: string, preview = false): Promise<any> {
   }
 
   const json = await response.json();
-  
+
   if (json.errors) {
-    console.error('Contentful GraphQL Errors:', JSON.stringify(json.errors, null, 2));
+    console.error(
+      'Contentful GraphQL Errors:',
+      JSON.stringify(json.errors, null, 2)
+    );
     throw new Error('Failed to fetch data from Contentful');
   }
 

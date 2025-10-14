@@ -76,6 +76,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    #dont forget to add only on main branch
     needs: [eslint, prettier, jest] # This job runs only after all other jobs pass
     strategy:
       fail-fast: true
