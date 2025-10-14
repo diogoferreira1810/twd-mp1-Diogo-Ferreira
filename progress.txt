@@ -11,9 +11,14 @@ Tenha várias etapas que corram em sequência para instalar dependências,
 validar a qualidade do código e fazer deploy do projeto; 
 o Apenas corra o deploy quando a pipeline for executada na branch default; - done
 o Possa ser executada: 
-   Nos vários commits que sejam feitos no repositório; 
+   Nos vários commits que sejam feitos no repositório; - done
+
+proximo na lista - https://chatgpt.com/share/68eedf17-9140-8011-a840-2b492a36dd14
    Na branch default, sempre que os conteúdos do CMS forem atualizados 
 (i.e., através de um webhook); 
+
+
+
 Na branch default, às 00:00 de todos os dias da semana. 
 Depois de validar que este trigger funciona, tem atenção para o 
 desligar para não exceder os limites do workspace do GitHub.
