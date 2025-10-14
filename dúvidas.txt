@@ -1,1 +1,1 @@
-stuck on deploying to netlify
+stuck on deploying to netlify, possibly fixed? must add variablels of netlify
