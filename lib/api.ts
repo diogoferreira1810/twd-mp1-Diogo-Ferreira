@@ -23,8 +23,14 @@ async function fetchGraphQL(query: string, preview = false): Promise<any> {
   // Debug environment variables
   console.log('Debug - Environment Variables:');
   console.log('CONTENTFUL_SPACE_ID:', process.env.CONTENTFUL_SPACE_ID);
-  console.log('CONTENTFUL_ACCESS_TOKEN:', process.env.CONTENTFUL_ACCESS_TOKEN ? '**exists**' : '**missing**');
-  console.log('CONTENTFUL_PREVIEW_ACCESS_TOKEN:', process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN ? '**exists**' : '**missing**');
+  console.log(
+    'CONTENTFUL_ACCESS_TOKEN:',
+    process.env.CONTENTFUL_ACCESS_TOKEN ? '**exists**' : '**missing**'
+  );
+  console.log(
+    'CONTENTFUL_PREVIEW_ACCESS_TOKEN:',
+    process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN ? '**exists**' : '**missing**'
+  );
   console.log('Preview mode:', preview);
 
   const response = await fetch(
