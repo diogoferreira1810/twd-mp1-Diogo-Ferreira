@@ -2,7 +2,7 @@ name: Pipeline
 
 on:
   schedule:
-    - cron: '0 0 * * *' # runs at midnight every day
+    - cron: '0 0 * * *' # runs at midnight every day and dont forget to delete after
   push:
     branches:
       - '**'
