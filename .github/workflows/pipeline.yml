@@ -2,10 +2,13 @@ name: Pipeline
 
 on:
   push:
-    branches: [main, pipeline-building]
+    branches:
+      - main
   pull_request:
-    branches: [main, pipeline-building]
-
+    branches:
+      - main
+  repository_dispatch:
+    types: [Auto-Deploy]
 jobs:
   eslint:
     runs-on: ubuntu-latest
@@ -76,6 +79,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' # This job runs only on main branch
     needs: [eslint, prettier, jest] # This job runs only after all other jobs pass
     env:
       CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
