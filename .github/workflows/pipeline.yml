@@ -3,12 +3,12 @@ name: Pipeline
 on:
   push:
     branches:
-      - '**'
+      - main
   pull_request:
     branches:
-      - '**'
+      - main
   repository_dispatch:
-    types: [contentful-update]
+    types: [Auto-Deploy]
 jobs:
   eslint:
     runs-on: ubuntu-latest
