@@ -19,7 +19,7 @@ proximo na lista - https://chatgpt.com/share/68eedf17-9140-8011-a840-2b492a36dd1
 
 
 
-Na branch default, às 00:00 de todos os dias da semana. 
+Na branch default, às 00:00 de todos os dias da semana. - done
 
 Depois de validar que este trigger funciona, tem atenção para o 
 desligar para não exceder os limites do workspace do GitHub.
