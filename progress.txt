@@ -7,15 +7,15 @@ deployed on netlify, contentful auto-deploy also working, missing custom domain
 need to create a readme file, to store commands and stuff like that
 
 TO-DO LIST
-Tenha várias etapas que corram em sequência para instalar dependências, 
-validar a qualidade do código e fazer deploy do projeto; 
-o Apenas corra o deploy quando a pipeline for executada na branch default; - done
-o Possa ser executada: 
-   Nos vários commits que sejam feitos no repositório; - done
-
-proximo na lista - https://chatgpt.com/share/68eedf17-9140-8011-a840-2b492a36dd14
-   Na branch default, sempre que os conteúdos do CMS forem atualizados 
-(i.e., através de um webhook); - done
+“pre-commit” Hooks:
+○ prettier: Formats staged files using Prettier and adds the changes to the commit.
+○ docs: Generates documentation based on comments throughout the code with
+JSDocs scripts.
+○ lint: Lints staged files using ESLint, ensuring adherence to coding standards.
+○ test: Executes test scripts on staged files.
+○
+● “pre-push” Hooks:
+○ test: Runs test scripts before pushing changes.
 
 
 
