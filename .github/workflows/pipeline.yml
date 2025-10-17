@@ -1,8 +1,6 @@
 name: Pipeline
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # runs at midnight every day and dont forget to delete after
   push:
     branches:
       - '**'
@@ -10,7 +8,7 @@ on:
   repository_dispatch:
     types: [Auto-Deploy]
 jobs:
-  eslint:
+  code-quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,22 +23,9 @@ jobs:
 
       - name: Run ESLint
         run: npm run eslint .
-
-  prettier:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
-
-      - name: Install dependencies
-        run: npm ci
-
       - name: Run Prettier
         run: npm run prettier -- --check .
+
 
   jest:
     runs-on: ubuntu-latest
@@ -57,30 +42,16 @@ jobs:
 
       - name: Run Jest
         run: npm run jest
-
-  jest-coverage:
-    runs-on: ubuntu-latest
-    needs: [eslint, prettier, jest] # This job runs only after all other jobs pass
-    strategy:
-      fail-fast: true
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
-
-      - name: Install dependencies
-        run: npm ci
-
+        
       - name: Run Jest Coverage
         run: npm run jest-coverage
+
+
 
   build:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' # This job runs only on main branch
-    needs: [eslint, prettier, jest] # This job runs only after all other jobs pass
+    needs: [code-quality, jest] # This job runs only after all other jobs pass
     env:
       CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
       CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
