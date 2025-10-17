@@ -1,21 +1,9 @@
-
-
-TO-DO LIST
-“pre-commit” Hooks:
-○ prettier: Formats staged files using Prettier and adds the changes to the commit.
-○ docs: Generates documentation based on comments throughout the code with
-JSDocs scripts.
-○ lint: Lints staged files using ESLint, ensuring adherence to coding standards.
-○ test: Executes test scripts on staged files.
-○
-● “pre-push” Hooks:
-○ test: Runs test scripts before pushing changes.
-
-
 - pre commit is doing lint and prettier
 - pre push is doing jest and code coverage
+- merged prettier and eslint in pipeline, started using cache
 
-
+TO DO 
+- added decent content on Contentful
 
 
 npm check-code - executes both lint, prettier and jest 
