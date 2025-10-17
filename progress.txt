@@ -1,10 +1,4 @@
-added lint, npm run eslint to execute, lint-test.js to check rules
-added prettier, npm run prettier to execute, missing page to test and see stuff changing
-added jest, npm run jest to execute,  script for running the tests is up, need to do code coverage
-added lefthook, commands are all working
-pipeline tests are working, anti main commit working aswell
-deployed on netlify, contentful auto-deploy also working, missing custom domain
-need to create a readme file, to store commands and stuff like that
+
 
 TO-DO LIST
 “pre-commit” Hooks:
@@ -18,11 +12,8 @@ JSDocs scripts.
 ○ test: Runs test scripts before pushing changes.
 
 
-
-Na branch default, às 00:00 de todos os dias da semana. - done
-
-Depois de validar que este trigger funciona, tem atenção para o 
-desligar para não exceder os limites do workspace do GitHub.
+- pre commit is doing lint and prettier
+- pre push is doing jest and code coverage
 
 
 
