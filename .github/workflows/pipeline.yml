@@ -7,6 +7,8 @@ on:
   pull_request:
   repository_dispatch:
     types: [Auto-Deploy]
+
+
 jobs:
   code-quality:
     runs-on: ubuntu-latest
@@ -17,6 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -25,7 +28,6 @@ jobs:
         run: npm run eslint .
       - name: Run Prettier
         run: npm run prettier -- --check .
-
 
   jest:
     runs-on: ubuntu-latest
@@ -36,17 +38,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+          cache: 'npm' #if it detects in package-lock, it wont force download again, if it doesnt detect, it will download
 
       - name: Install dependencies
         run: npm ci
 
       - name: Run Jest
         run: npm run jest
-        
+
       - name: Run Jest Coverage
         run: npm run jest-coverage
-
-
 
   build:
     runs-on: ubuntu-latest
@@ -65,6 +66,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -89,6 +91,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
