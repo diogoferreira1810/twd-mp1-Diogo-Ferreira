@@ -82,12 +82,12 @@ jobs:
       # Second Snyk step: Continuous monitoring
       # This uploads results to Snyk dashboard for tracking over time
       - name: Upload results to Snyk
-        if: success()  # Only run if security scan passed
+        if: success() # Only run if security scan passed
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: monitor  # Different command for monitoring
+          command: monitor # Different command for monitoring
           # Replace your-org-name with your Snyk organization name
           args: --org=diogoferreira1810
 
