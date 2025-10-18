@@ -48,10 +48,53 @@ jobs:
       - name: Run Jest Coverage
         run: npm run jest-coverage
 
+  # Security scanning job - runs vulnerability and license checks
+  security:
+    runs-on: ubuntu-latest
+    # Run after code-quality to ensure we're scanning valid code
+    needs: [code-quality]
+    steps:
+      # Standard checkout to get code
+      - uses: actions/checkout@v4
+
+      # Set up Node with caching for faster runs
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      # Install dependencies - needed for Snyk to scan actual installed packages
+      - name: Install dependencies
+        run: npm ci
+
+      # First Snyk step: Security scanning
+      # This checks for vulnerabilities and license issues
+      - name: Run Snyk security scan
+        uses: snyk/actions/node@master
+        env:
+          # Use token from GitHub secrets
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          # Fail on medium or higher severity issues
+          args: --severity-threshold=medium
+
+      # Second Snyk step: Continuous monitoring
+      # This uploads results to Snyk dashboard for tracking over time
+      - name: Upload results to Snyk
+        if: success()  # Only run if security scan passed
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor  # Different command for monitoring
+          # Replace your-org-name with your Snyk organization name
+          args: --org=diogoferreira1810
+
   build:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' # This job runs only on main branch
-    needs: [code-quality, jest] # This job runs only after all other jobs pass
+    needs: [code-quality, jest, security] # This job runs only after all other jobs pass
     env:
       CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
       CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}

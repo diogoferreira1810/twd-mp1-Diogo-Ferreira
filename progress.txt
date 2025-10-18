@@ -1,10 +1,10 @@
 - pre commit is doing lint and prettier
 - pre push is doing jest and code coverage
 - merged prettier and eslint in pipeline, started using cache
+- added teams notification
 
 TO DO 
 - add decent content on Contentful
-- do teams notification
 
 
 npm check-code - executes both lint, prettier and jest 
