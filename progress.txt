@@ -3,7 +3,8 @@
 - merged prettier and eslint in pipeline, started using cache
 
 TO DO 
-- added decent content on Contentful
+- add decent content on Contentful
+- do teams notification
 
 
 npm check-code - executes both lint, prettier and jest 
