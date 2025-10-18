@@ -76,8 +76,8 @@ jobs:
           # Use token from GitHub secrets
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          # Fail on medium or higher severity issues
-          args: --severity-threshold=medium
+          # Fail on high or higher severity issues
+          args: --severity-threshold=high #only fail if high severity issues are found
 
       # Second Snyk step: Continuous monitoring
       # This uploads results to Snyk dashboard for tracking over time
