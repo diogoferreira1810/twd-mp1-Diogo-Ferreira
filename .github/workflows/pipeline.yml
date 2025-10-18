@@ -143,7 +143,7 @@ jobs:
 
       - name: Send Deployment Teams Notification
         uses: toko-bifrost/ms-teams-deploy-card@master
-        if: success()
+        if: always()  # Run this step even if previous steps failed
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
@@ -159,7 +159,7 @@ jobs:
             - name: Deployment URL
               value: https://fantastic-liger-67fac2.netlify.app
             - name: Status
-              value: Deployed Successfully 🚀
+              value: ${{ job.status == 'success' && 'Deployed Successfully 🚀' || 'Deployment Failed ❌' }}
 
   notify:
     runs-on: ubuntu-latest
@@ -167,6 +167,7 @@ jobs:
     steps:
       - name: Send Teams Notification
         uses: toko-bifrost/ms-teams-deploy-card@master
+        if: always()  # Run this step even if previous steps failed
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
@@ -177,7 +178,7 @@ jobs:
           custom-facts: |
             - name: Branch
               value: ${{ github.ref_name }}
-            - name: Tests Status
-              value: Completed
-            - name: Code Quality
-              value: Passed
+            - name: Pipeline Status
+              value: ${{ job.status == 'success' && 'All Checks Passed ✅' || 'Checks Failed ❌' }}
+            - name: Details
+              value: ${{ job.status == 'success' && 'Tests and Code Quality completed successfully' || 'One or more checks failed. Check GitHub Actions for details' }}
