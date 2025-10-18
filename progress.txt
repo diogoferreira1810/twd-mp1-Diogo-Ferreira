@@ -1,30 +1,10 @@
-added lint, npm run eslint to execute, lint-test.js to check rules
-added prettier, npm run prettier to execute, missing page to test and see stuff changing
-added jest, npm run jest to execute,  script for running the tests is up, need to do code coverage
-added lefthook, commands are all working
-pipeline tests are working, anti main commit working aswell
-deployed on netlify, contentful auto-deploy also working, missing custom domain
-need to create a readme file, to store commands and stuff like that
+- pre commit is doing lint and prettier
+- pre push is doing jest and code coverage
+- merged prettier and eslint in pipeline, started using cache
+- added teams notification
 
-TO-DO LIST
-Tenha várias etapas que corram em sequência para instalar dependências, 
-validar a qualidade do código e fazer deploy do projeto; 
-o Apenas corra o deploy quando a pipeline for executada na branch default; - done
-o Possa ser executada: 
-   Nos vários commits que sejam feitos no repositório; - done
-
-proximo na lista - https://chatgpt.com/share/68eedf17-9140-8011-a840-2b492a36dd14
-   Na branch default, sempre que os conteúdos do CMS forem atualizados 
-(i.e., através de um webhook); - done
-
-
-
-Na branch default, às 00:00 de todos os dias da semana. - done
-
-Depois de validar que este trigger funciona, tem atenção para o 
-desligar para não exceder os limites do workspace do GitHub.
-
-
+TO DO 
+- add decent content on Contentful
 
 
 npm check-code - executes both lint, prettier and jest 

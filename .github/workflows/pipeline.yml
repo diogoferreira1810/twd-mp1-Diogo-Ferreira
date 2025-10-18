@@ -1,16 +1,15 @@
 name: Pipeline
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # runs at midnight every day and dont forget to delete after
   push:
     branches:
       - '**'
   pull_request:
   repository_dispatch:
     types: [Auto-Deploy]
+
 jobs:
-  eslint:
+  code-quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,26 +18,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Run ESLint
         run: npm run eslint .
-
-  prettier:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
-
-      - name: Install dependencies
-        run: npm ci
-
       - name: Run Prettier
         run: npm run prettier -- --check .
 
@@ -51,6 +37,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+          cache: 'npm' #if it detects in package-lock, it wont force download again, if it doesnt detect, it will download
 
       - name: Install dependencies
         run: npm ci
@@ -58,29 +45,56 @@ jobs:
       - name: Run Jest
         run: npm run jest
 
-  jest-coverage:
+      - name: Run Jest Coverage
+        run: npm run jest-coverage
+
+  # Security scanning job - runs vulnerability and license checks
+  security:
     runs-on: ubuntu-latest
-    needs: [eslint, prettier, jest] # This job runs only after all other jobs pass
-    strategy:
-      fail-fast: true
+    # Run after code-quality to ensure we're scanning valid code
+    needs: [code-quality]
     steps:
+      # Standard checkout to get code
       - uses: actions/checkout@v4
 
+      # Set up Node with caching for faster runs
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+          cache: 'npm'
 
+      # Install dependencies - needed for Snyk to scan actual installed packages
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Jest Coverage
-        run: npm run jest-coverage
+      # First Snyk step: Security scanning
+      # This checks for vulnerabilities and license issues
+      - name: Run Snyk security scan
+        uses: snyk/actions/node@master
+        env:
+          # Use token from GitHub secrets
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          # Fail on high or higher severity issues
+          args: --severity-threshold=high #only fail if high severity issues are found
+
+      # Second Snyk step: Continuous monitoring
+      # This uploads results to Snyk dashboard for tracking over time
+      - name: Upload results to Snyk
+        if: success() # Only run if security scan passed
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor # Different command for monitoring
+          # Replace your-org-name with your Snyk organization name
+          args: --org=diogoferreira1810
 
   build:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' # This job runs only on main branch
-    needs: [eslint, prettier, jest] # This job runs only after all other jobs pass
+    needs: [code-quality, jest, security] # This job runs only after all other jobs pass
     env:
       CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
       CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
@@ -94,6 +108,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -118,9 +133,52 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Deploy
         run: npx netlify-cli deploy --site  ${{ secrets.NETLIFY_SITE_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --prod
+
+      - name: Send Deployment Teams Notification
+        uses: toko-bifrost/ms-teams-deploy-card@master
+        if: always()  # Run this step even if previous steps failed
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          card-layout-start: cozy
+          card-layout-exit: complete
+          show-on-start: true
+          show-on-exit: true
+          custom-facts: |
+            - name: Environment
+              value: Production
+            - name: Branch
+              value: ${{ github.ref_name }}
+            - name: Deployment URL
+              value: https://fantastic-liger-67fac2.netlify.app
+            - name: Status
+              value: ${{ job.status == 'success' && 'Deployed Successfully 🚀' || 'Deployment Failed ❌' }}
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: [code-quality, jest]
+    steps:
+      - name: Send Teams Notification
+        uses: toko-bifrost/ms-teams-deploy-card@master
+        if: always()  # Run this step even if previous steps failed
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          card-layout-start: cozy
+          card-layout-exit: complete
+          show-on-start: true
+          show-on-exit: true
+          custom-facts: |
+            - name: Branch
+              value: ${{ github.ref_name }}
+            - name: Pipeline Status
+              value: ${{ job.status == 'success' && 'All Checks Passed ✅' || 'Checks Failed ❌' }}
+            - name: Details
+              value: ${{ job.status == 'success' && 'Tests and Code Quality completed successfully' || 'One or more checks failed. Check GitHub Actions for details' }}
