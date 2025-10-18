@@ -48,23 +48,20 @@ jobs:
       - name: Run Jest Coverage
         run: npm run jest-coverage
 
-  # Security scanning job - runs vulnerability and license checks
   security:
     runs-on: ubuntu-latest
-    # Run after code-quality to ensure we're scanning valid code
     needs: [code-quality]
     steps:
-      # Standard checkout to get code
       - uses: actions/checkout@v4
 
-      # Set up Node with caching for faster runs
+    
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
           cache: 'npm'
 
-      # Install dependencies - needed for Snyk to scan actual installed packages
+      
       - name: Install dependencies
         run: npm ci
 
@@ -76,10 +73,8 @@ jobs:
           # Use token from GitHub secrets
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          # Fail on high or higher severity issues
           args: --severity-threshold=high #only fail if high severity issues are found
 
-      # Second Snyk step: Continuous monitoring
       # This uploads results to Snyk dashboard for tracking over time
       - name: Upload results to Snyk
         if: success() # Only run if security scan passed
@@ -88,13 +83,12 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: monitor # Different command for monitoring
-          # Replace your-org-name with your Snyk organization name
           args: --org=diogoferreira1810
 
   build:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' # This job runs only on main branch
-    needs: [code-quality, jest, security] # This job runs only after all other jobs pass
+    needs: [code-quality, jest, security] # only runs if those jobs pass
     env:
       CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
       CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
@@ -143,7 +137,7 @@ jobs:
 
       - name: Send Deployment Teams Notification
         uses: toko-bifrost/ms-teams-deploy-card@master
-        if: always()  # Run this step even if previous steps failed
+        if: always() # Run this step even if previous steps failed
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
@@ -161,13 +155,13 @@ jobs:
             - name: Status
               value: ${{ job.status == 'success' && 'Deployed Successfully 🚀' || 'Deployment Failed ❌' }}
 
-  notify:
+  notify: #testing notification job beforing deploying
     runs-on: ubuntu-latest
     needs: [code-quality, jest]
     steps:
       - name: Send Teams Notification
         uses: toko-bifrost/ms-teams-deploy-card@master
-        if: always()  # Run this step even if previous steps failed
+        if: always() # Run this step even if previous steps failed
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
